@@ -20,6 +20,8 @@ router.get('/', (req, res) => {
 // POST animal
 router.post('/', (req, res) => {
   let newAnimal = req.body;
+  // if no class selected on form, set datatype to null for sql handling
+  if (newAnimal.class_id === '') { newAnimal.class_id = null }
   const queryText = `INSERT INTO "species" ("species_name", "class_id") VALUES ($1, $2);`;
   pool.query(queryText, [newAnimal.species_name, newAnimal.class_id])
     .then((result) => {

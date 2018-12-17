@@ -36,7 +36,6 @@ class ClassForm extends React.Component {
   addNewClass = event => {
     event.preventDefault();
     this.props.dispatch({ type: 'ADD_CLASS', payload: this.state });
-    this.props.dispatch({ type: 'CLASS_SNACK'});
     this.clearFields();
   }
 

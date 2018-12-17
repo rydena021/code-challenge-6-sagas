@@ -15,6 +15,7 @@ import createSagaMiddleware from 'redux-saga';
 function* addAnimal(action) {
   try {
     yield call(axios.post, '/zoo', action.payload);
+    yield dispatch({ type: 'ANIMAL_SNACK' });
     yield dispatch({ type: 'GET_ZOO_ANIMALS' });
   } catch (error) {
     console.log('error: ', error);
@@ -24,6 +25,7 @@ function* addAnimal(action) {
 function* addClass(action) {
   try {
     yield call(axios.post, '/zoo/classes', action.payload);
+    yield dispatch({ type: 'CLASS_SNACK' });
     yield dispatch({ type: 'GET_CLASSES' });
   } catch (error) {
     console.log('error: ', error);
@@ -51,6 +53,7 @@ function* fetchClasses() {
 function* removeAnimal(action) {
   try {
     yield call(axios.delete, `/zoo/${action.payload}`);
+    yield dispatch({ type: 'DELETE_SNACK' });
     yield dispatch({ type: 'GET_ZOO_ANIMALS' });
   } catch (error) {
     console.log('error: ', error);

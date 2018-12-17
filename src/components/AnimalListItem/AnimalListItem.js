@@ -8,7 +8,6 @@ class AnimalListItem extends Component {
     // Renders the list of animals
     handleClick = () => {
       this.props.dispatch({ type: 'REMOVE_ANIMAL', payload: this.props.classData.id });
-      this.props.dispatch({ type: 'DELETE_SNACK' });
     }
 
     render() {

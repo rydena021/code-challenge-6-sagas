@@ -35,7 +35,7 @@ const styles = theme => ({
 
 const emptyAnimalObject = {
   species_name: '',
-  class_id: null
+  class_id: ''
 };
 
 class AnimalForm extends React.Component {
@@ -44,7 +44,6 @@ class AnimalForm extends React.Component {
   addNewAnimal = event => {
     event.preventDefault();
     this.props.dispatch({ type: 'ADD_ANIMAL', payload: this.state })
-    this.props.dispatch({ type: 'ANIMAL_SNACK' });
     this.clearFields();
   }
 
