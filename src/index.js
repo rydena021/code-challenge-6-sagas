@@ -88,11 +88,27 @@ const classes = (state = [], action) => {
     }
 }
 
+const snackbars = (state = { open: false, message: '' }, action) => {
+  switch (action.type) {
+    case 'ANIMAL_SNACK':
+      return { open: true, message: 'Animal Added' };
+    case 'CLASS_SNACK':
+      return { open: true, message: 'Class Added' };
+    case 'DELETE_SNACK':
+      return { open: true, message: 'Animal Transferred' };
+    case 'HIDE_SNACK':
+      return { open: false, message: '' };
+    default:
+      return state;
+  }
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         zooAnimals,
-        classes
+        classes,
+        snackbars
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
