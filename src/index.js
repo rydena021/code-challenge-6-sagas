@@ -7,13 +7,24 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 // Provider allows us to use redux within our react app
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
+import axios from 'axios';
+import { takeEvery, call, put as dispatch } from 'redux-saga/effects';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
 
+
+function* fetchAnimals() {
+  try {
+    const animalsResponse = yield call(axios.get, '/zoo');
+    yield dispatch({ type: 'SET_ZOO_ANIMALS', payload: animalsResponse.data });
+  } catch (error) {
+    console.log('error: ', error);
+  }
+}
+
 // Your saga should listen for the action type of `GET_ZOO_ANIMALS`
 function* rootSaga() {
-    // YOUR CODE HERE
-
+  yield takeEvery('GET_ZOO_ANIMALS', fetchAnimals);
 }
 
 // Create sagaMiddleware
@@ -41,6 +52,6 @@ const storeInstance = createStore(
 // Pass rootSaga into our sagaMiddleware
 sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, 
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>,
     document.getElementById('root'));
 registerServiceWorker();
