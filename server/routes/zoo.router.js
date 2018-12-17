@@ -57,4 +57,17 @@ router.get('/classes', (req, res) => {
     });
 });
 
+// POST class
+router.post('/classes', (req, res) => {
+  const queryText = `INSERT INTO "class" ("class_name") VALUES ($1);`;
+  pool.query(queryText, [req.body.class_name])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('Error completing POST class query', err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

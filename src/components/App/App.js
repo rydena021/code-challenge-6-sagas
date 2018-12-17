@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AnimalList from '../AnimalList/AnimalList'
 import AnimalForm from '../AnimalForm/AnimalForm'
+import ClassForm from '../ClassForm/ClassForm'
 import './App.css';
 
 class App extends Component {
@@ -15,6 +16,8 @@ class App extends Component {
         <br />
         <br />
         <AnimalForm />
+        <br />
+        <ClassForm />
         <br />
         <AnimalList />
       </div>

@@ -21,6 +21,15 @@ function* addAnimal(action) {
   }
 }
 
+function* addClass(action) {
+  try {
+    yield call(axios.post, '/zoo/classes', action.payload);
+    yield dispatch({ type: 'GET_CLASSES' });
+  } catch (error) {
+    console.log('error: ', error);
+  }
+}
+
 function* fetchAnimals() {
   try {
     const animalsResponse = yield call(axios.get, '/zoo');
@@ -54,6 +63,7 @@ function* rootSaga() {
   yield takeEvery('ADD_ANIMAL', addAnimal);
   yield takeEvery('REMOVE_ANIMAL', removeAnimal);
   yield takeEvery('GET_CLASSES', fetchClasses);
+  yield takeEvery('ADD_CLASS', addClass);
 }
 
 // Create sagaMiddleware
