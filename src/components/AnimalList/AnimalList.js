@@ -16,7 +16,7 @@ class AnimalList extends Component {
         return (
             <table className="AnimalList">
                 <thead>
-                    <tr><th>Species</th><th>Class</th></tr>
+                    <tr><th>Species</th><th>Class</th><th></th></tr>
                 </thead>
                 <tbody>
                     {/* Render each item from the zooAnimal reducer */}

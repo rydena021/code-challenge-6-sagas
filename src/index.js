@@ -12,6 +12,14 @@ import { takeEvery, call, put as dispatch } from 'redux-saga/effects';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
 
+function* addAnimal(action) {
+  try {
+    yield call(axios.post, '/zoo', action.payload);
+    yield dispatch({ type: 'GET_ZOO_ANIMALS' });
+  } catch (error) {
+    console.log('error: ', error);
+  }
+}
 
 function* fetchAnimals() {
   try {
@@ -22,9 +30,30 @@ function* fetchAnimals() {
   }
 }
 
+function* fetchClasses() {
+  try {
+    const classesResponse = yield call(axios.get, '/zoo/classes');
+    yield dispatch({ type: 'SET_CLASSES', payload: classesResponse.data });
+  } catch (error) {
+    console.log('error: ', error);
+  }
+}
+
+function* removeAnimal(action) {
+  try {
+    yield call(axios.delete, `/zoo/${action.payload}`);
+    yield dispatch({ type: 'GET_ZOO_ANIMALS' });
+  } catch (error) {
+    console.log('error: ', error);
+  }
+}
+
 // Your saga should listen for the action type of `GET_ZOO_ANIMALS`
 function* rootSaga() {
   yield takeEvery('GET_ZOO_ANIMALS', fetchAnimals);
+  yield takeEvery('ADD_ANIMAL', addAnimal);
+  yield takeEvery('REMOVE_ANIMAL', removeAnimal);
+  yield takeEvery('GET_CLASSES', fetchClasses);
 }
 
 // Create sagaMiddleware
@@ -40,10 +69,20 @@ const zooAnimals = (state = [], action) => {
     }
 }
 
+const classes = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_CLASSES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         zooAnimals,
+        classes
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
